@@ -46,7 +46,7 @@ Forge your PUF responses with precision.
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/PUFForge.git
+git clone https://github.com/TakMashhido/PUFForge.git
 cd PUFForge
 
 # Install dependencies with uv
@@ -364,4 +364,4 @@ If all PUFs are disabled in config, the tool will exit with a message. Enable at
 
 ## License
 
-MIT
+[MIT](LICENSE)
