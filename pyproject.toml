@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.scripts]
-puf-crp-gen = "PUFForge.__main__:main"
+PUFForge = "PUFForge.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

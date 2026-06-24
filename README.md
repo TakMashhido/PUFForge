@@ -2,17 +2,17 @@
 
 **PUFForge** — A Python tool to generate Challenge-Response Pairs (CRPs) for various Physically Unclonable Function (PUF) types using the [pypuf](https://github.com/nils-wisiol/pypuf) library v2.2.0.
 
-```
-╔═════════════════════════════════════════════════════════════════════════════════════════════╗
-║ ▓▓▓▓▓▓╗ ▓▓╗   ▓▓╗▓▓▓▓▓▓▓╗▓▓▓▓▓▓▓╗ ▓▓▓▓▓▓╗ ▓▓▓▓▓▓╗  ▓▓▓▓▓▓╗ ▓▓▓▓▓▓▓╗ ║
-║ ▓▓╔══▓▓╗▓▓║   ▓▓║▓▓╔════╝▓▓╔════╝▓▓╔═══▓▓╗▓▓╔══▓▓╗▓▓╔════╝ ▓▓╔════╝ ║
-║ ▓▓▓▓▓▓╔╝▓▓║   ▓▓║▓▓▓▓▓╗  ▓▓▓▓▓╗  ▓▓║   ▓▓║▓▓▓▓▓▓╔╝▓▓║  ▓▓▓╗▓▓▓▓▓╗   ║
-║ ▓▓╔═══╝ ▓▓║   ▓▓║▓▓╔══╝  ▓▓╔══╝  ▓▓║   ▓▓║▓▓╔══▓▓╗▓▓║   ▓▓║▓▓╔══╝   ║
-║ ▓▓║     ╚▓▓▓▓▓▓╔╝▓▓║     ▓▓║     ╚▓▓▓▓▓▓╔╝▓▓║  ▓▓║╚▓▓▓▓▓▓╔╝▓▓▓▓▓▓▓╗ ║
-║ ╚═╝      ╚═════╝ ╚═╝     ╚═╝      ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ║
-║                                                                                              ║
-║                          Developed by Koustav Kumar Mondal                                   ║
-╚═════════════════════════════════════════════════════════════════════════════════════════════╝
+```text
+▓▓▓▓▓▓╗ ▓▓╗   ▓▓╗▓▓▓▓▓▓▓╗▓▓▓▓▓▓▓╗ ▓▓▓▓▓▓╗ ▓▓▓▓▓▓╗  ▓▓▓▓▓▓╗ ▓▓▓▓▓▓▓╗
+▓▓╔══▓▓╗▓▓║   ▓▓║▓▓╔════╝▓▓╔════╝▓▓╔═══▓▓╗▓▓╔══▓▓╗▓▓╔════╝ ▓▓╔════╝
+▓▓▓▓▓▓╔╝▓▓║   ▓▓║▓▓▓▓▓╗  ▓▓▓▓▓╗  ▓▓║   ▓▓║▓▓▓▓▓▓╔╝▓▓║  ▓▓▓╗▓▓▓▓▓╗
+▓▓╔═══╝ ▓▓║   ▓▓║▓▓╔══╝  ▓▓╔══╝  ▓▓║   ▓▓║▓▓╔══▓▓╗▓▓║   ▓▓║▓▓╔══╝
+▓▓║     ╚▓▓▓▓▓▓╔╝▓▓║     ▓▓║     ╚▓▓▓▓▓▓╔╝▓▓║  ▓▓║╚▓▓▓▓▓▓╔╝▓▓▓▓▓▓▓╗
+╚═╝      ╚═════╝ ╚═╝     ╚═╝      ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+
+           Physical Unclonable Function Forge (PUFForge)
+
+                Developed by Koustav Kumar Mondal
 ```
 
 Forge your PUF responses with precision.
@@ -47,6 +47,31 @@ Forge your PUF responses with precision.
 
 > **Note**: `xor_feedforward_arbiter_puf` has a known pypuf library limitation at response lengths >4 bits (IndexError in feedforward challenge handling). Works correctly at 1-4 bits.
 
+## Requirements
+
+- Python 3.10+
+- [uv](https://github.com/astral-sh/uv) (for dependency management)
+
+Dependencies (installed via `uv sync`):
+- `pypuf>=2.2.0`
+- `pyyaml`
+- `pandas`
+- `numpy`
+
+## Project Structure
+
+```
+PUFForge/
+├── config.yml              # Configuration file
+├── pyproject.toml          # Project metadata and dependencies
+├── README.md               # This file
+├── LICENSE                 # MIT License
+├── PUFForge/          # Main package
+│   ├── __init__.py
+│   └── __main__.py         # Entry point (python -m PUFForge)
+└── output/                 # Generated CSV files (created at runtime)
+```
+
 ## Installation
 
 ```bash
@@ -61,13 +86,19 @@ uv sync
 uv pip install -e .
 ```
 
-After installation, you can run PUFForge via:
+After installation, run PUFForge via:
 ```bash
-# Using uv
-uv run puf-crp-gen
+# Using uv (CLI)
+uv run PUFForge
 
-# Or if installed with pip
-puf-crp-gen
+# Using uv (module)
+uv run python -m PUFForge
+
+# Using python directly
+python -m PUFForge
+
+# Direct CLI (if installed with pip)
+PUFForge
 ```
 
 ## Configuration (`config.yml`)
@@ -298,31 +329,6 @@ uv run python -m PUFForge --puf-type arbiter_puf --challenges "1111...1111"
 ```
 
 To get different outputs, change the `seed` in `config.yml` or use a different `config.yml`.
-
-## Requirements
-
-- Python 3.10+
-- [uv](https://github.com/astral-sh/uv) (for dependency management)
-
-Dependencies (installed via `uv sync`):
-- `pypuf>=2.2.0`
-- `pyyaml`
-- `pandas`
-- `numpy`
-
-## Project Structure
-
-```
-PUFForge/
-├── config.yml              # Configuration file
-├── pyproject.toml          # Project metadata and dependencies
-├── README.md               # This file
-├── LICENSE                 # MIT License
-├── PUFForge/          # Main package
-│   ├── __init__.py
-│   └── __main__.py         # Entry point (puf-crp-gen command)
-└── output/                 # Generated CSV files (created at runtime)
-```
 
 ## Advanced: Custom PUF Parameters
 
