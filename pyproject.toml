@@ -1,0 +1,27 @@
+[project]
+name = "puf-forge"
+version = "0.1.0"
+description = "PUFForge: Generate Challenge-Response Pairs (CRPs) for various Physically Unclonable Function (PUF) types using pypuf library with configurable parameters via YAML config"
+authors = [
+    {name = "Koustav Kumar Mondal"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pypuf>=2.2.0",
+    "pyyaml>=6.0.3",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+]
+
+[project.scripts]
+puf-crp-gen = "PUFForge.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["PUFForge*"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

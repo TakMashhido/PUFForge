@@ -1,0 +1,87 @@
+# PUF CRP Generator Configuration
+# All challenge/response lengths are 128-bit as specified
+
+global:
+  num_crp_pairs: 1000          # Number of CRP pairs to generate per PUF type
+  challenge_length: 128        # Challenge length in bits (fixed at 128)
+  seed: 42                     # Random seed for reproducibility
+  output_dir: "output"         # Output directory for CSV files
+  response_length: 1           # Default response length in bits (1-512), can be overridden per PUF
+
+pufs:
+  # Arbiter PUF-based designs
+  arbiter_puf:
+    enabled: true
+    n: 128                     # Challenge length (number of stages)
+    response_length: 1         # Response length in bits (1-512), default: 1
+    # No additional parameters for basic Arbiter PUF
+
+  xor_arbiter_puf:
+    enabled: true
+    n: 128                     # Challenge length
+    k: 4                       # Number of XOR chains (typical: 2-5)
+    response_length: 1         # Response length in bits (1-512), default: 1
+
+  lightweight_secure_puf:
+    enabled: true
+    n: 128                     # Challenge length
+    k: 4                       # Number of XOR chains
+    response_length: 1         # Response length in bits (1-512), default: 1
+    # Lightweight Secure PUF uses a specific input transformation
+
+  permutation_puf:
+    enabled: true
+    n: 128                     # Challenge length
+    k: 4                       # Number of XOR chains
+    response_length: 1         # Response length in bits (1-512), default: 1
+    # Permutation PUF uses a permutation on the challenge
+
+  interpose_puf:
+    enabled: true
+    n: 128                     # Challenge length
+    k_down: 2                  # Number of chains in first XOR (down)
+    k_up: 1                    # Number of chains in second XOR (up)
+    response_length: 1         # Response length in bits (1-512), default: 1
+    # interpose_pos: null      # Optional: position of interposition (default: middle)
+    # Interpose PUF: XOR(k_down) -> permutation -> XOR(k_up)
+
+  # Feed-Forward Arbiter PUFs
+  feedforward_arbiter_puf:
+    enabled: true
+    n: 128                     # Challenge length
+    num_feedforward: 3         # Number of feed-forward connections
+    response_length: 1         # Response length in bits (1-512), default: 1
+    # feedforward_connections: null  # Optional: list of (from, to) tuples, e.g. [[0, 5], [10, 20]]
+    # If not provided, will be generated randomly
+
+  xor_feedforward_arbiter_puf:
+    enabled: true
+    n: 128                     # Challenge length
+    k: 2                       # Number of XOR chains
+    num_feedforward: 3         # Number of feed-forward connections per chain
+    response_length: 1         # Response length in bits (1-512), default: 1
+    # feedforward_connections: null  # Optional: list of lists of (from, to) tuples per chain
+
+  # Bistable Ring PUFs
+  bistable_ring_puf:
+    enabled: true
+    n: 128                     # Challenge length (number of stages)
+    response_length: 1         # Response length in bits (1-512), default: 1
+    # weights: null              # Optional: array of weights, if not provided will be generated
+    # Based on bistable ring oscillator design
+
+  xor_bistable_ring_puf:
+    enabled: true
+    n: 128                     # Challenge length
+    k: 2                       # Number of XOR chains
+    response_length: 1         # Response length in bits (1-512), default: 1
+    # weights: null              # Optional: array of weights, if not provided will be generated
+    # XOR of multiple bistable ring PUFs
+
+  # Random Transformation PUF
+  random_transformation_puf:
+    enabled: true
+    n: 128                     # Challenge length
+    k: 2                       # Number of XOR chains
+    response_length: 1         # Response length in bits (1-512), default: 1
+    # Random transformation applied to challenge before Arbiter PUF
